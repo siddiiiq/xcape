@@ -12,7 +12,7 @@ const Founders = () => {
   const founders = data?.founders || [];
 
   return (
-    <div className="mx-auto max-w-6xl px-6 pb-24 pt-40">
+    <div className="mx-auto max-w-6xl px-6 pb-24 pt-20 min-h-screen">
       <Seo title="The Crew" description="The people behind the journey." />
       <p className="text-xs uppercase tracking-widest2 text-ember">Who We Are</p>
       <h1 className="mt-3 font-display text-5xl tracking-wide sm:text-7xl">The People Behind The Journey</h1>
@@ -22,7 +22,7 @@ const Founders = () => {
         {error && <ErrorState message={error} onRetry={refetch} />}
         {!loading && !error && founders.length === 0 && <EmptyState title="No founders added yet." />}
         {!loading && !error && founders.length > 0 && (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 justify-center items-start">
             {founders.map((f) => (
               <FounderCard key={f._id} founder={f} />
             ))}

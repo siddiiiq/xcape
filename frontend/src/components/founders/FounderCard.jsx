@@ -15,18 +15,18 @@ const FounderCard = ({ founder, index = 0 }) => {
         transition-all
         duration-500
 
-        /* ========================================
-           MOBILE DESIGN
-           Tall cinematic portrait
-           ======================================== */
+          /* ========================================
+            MOBILE DESIGN
+            Centered, larger portrait for phones
+            ======================================== */
 
-        h-[245px]
-        w-[31vw]
-        max-w-[120px]
-        min-w-0
+          h-[320px]
+          w-[85vw]
+          max-w-[420px]
+          min-w-0
 
-        /* NO rounded corners on mobile */
-        rounded-none
+          /* soft rounded corners on mobile */
+          rounded-2xl
 
         /* subtle overlap */
         ${index === 1 ? "-mx-2 z-20" : "z-10"}
