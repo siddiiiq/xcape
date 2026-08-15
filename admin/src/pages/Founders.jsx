@@ -107,10 +107,10 @@ const Founders = () => {
       label: "",
       render: (row) => (
         <div className="flex justify-end gap-2">
-          <button onClick={() => setEditing({ ...row })} className="rounded p-2 hover:bg-zinc-100">
+          <button onClick={() => setEditing({ ...row })} className="rounded-lg p-2.5 hover:bg-zinc-100">
             <Pencil size={14} />
           </button>
-          <button onClick={() => setPendingDelete(row)} className="rounded p-2 hover:bg-red-50 hover:text-red-600">
+          <button onClick={() => setPendingDelete(row)} className="rounded-lg p-2.5 hover:bg-red-50 hover:text-red-600">
             <Trash2 size={14} />
           </button>
         </div>
@@ -165,7 +165,7 @@ const Founders = () => {
               <label className="label">Full Biography</label>
               <textarea rows={5} className="input" value={editing.longBio} onChange={(e) => setEditing((f) => ({ ...f, longBio: e.target.value }))} />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label className="label">Instagram URL</label>
                 <input className="input" value={editing.instagramUrl} onChange={(e) => setEditing((f) => ({ ...f, instagramUrl: e.target.value }))} />
@@ -187,18 +187,33 @@ const Founders = () => {
                   }}
                 />
                 {editing.gallery?.length > 0 && (
-                  <div className="mt-3 grid grid-cols-4 gap-2">
+                  <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
                     {editing.gallery.map((img) => (
                       <div key={img._id} className="group relative aspect-square overflow-hidden rounded-md">
                         <img src={img.url} alt="" className="h-full w-full object-cover" />
+                        {/* Full-cover hover reveal for mouse users (desktop only —
+                            :hover doesn't fire reliably on touch). */}
                         <button
                           onClick={async () => {
                             const res = await deleteFounderGalleryImage(editing._id, img._id);
                             setEditing((f) => ({ ...f, gallery: res.gallery }));
                           }}
-                          className="absolute inset-0 hidden items-center justify-center bg-black/50 text-white group-hover:flex"
+                          className="absolute inset-0 hidden items-center justify-center bg-black/50 text-white sm:group-hover:flex"
+                          aria-label="Delete image"
                         >
                           <Trash2 size={16} />
+                        </button>
+                        {/* Always-visible corner button so the same action is
+                            reachable by tap on mobile. */}
+                        <button
+                          onClick={async () => {
+                            const res = await deleteFounderGalleryImage(editing._id, img._id);
+                            setEditing((f) => ({ ...f, gallery: res.gallery }));
+                          }}
+                          className="absolute right-1 top-1 rounded-full bg-black/60 p-1.5 text-white sm:hidden"
+                          aria-label="Delete image"
+                        >
+                          <Trash2 size={14} />
                         </button>
                       </div>
                     ))}
@@ -207,22 +222,22 @@ const Founders = () => {
               </div>
             )}
 
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" checked={editing.published} onChange={(e) => setEditing((f) => ({ ...f, published: e.target.checked }))} />
                 Published
               </label>
-              <div className="w-24">
+              <div className="w-full sm:w-24">
                 <label className="label">Order</label>
                 <input type="number" className="input" value={editing.order} onChange={(e) => setEditing((f) => ({ ...f, order: Number(e.target.value) }))} />
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 pt-2">
-              <button onClick={() => setEditing(null)} className="btn-secondary">
+            <div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end sm:gap-3">
+              <button onClick={() => setEditing(null)} className="btn-secondary w-full sm:w-auto">
                 Cancel
               </button>
-              <button onClick={handleSave} disabled={saving} className="btn-primary">
+              <button onClick={handleSave} disabled={saving} className="btn-primary w-full sm:w-auto">
                 {saving ? "Saving..." : "Save Founder"}
               </button>
             </div>

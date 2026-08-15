@@ -57,7 +57,7 @@ const Places = () => {
       label: "",
       render: (row) => (
         <div className="flex justify-end gap-2">
-          <Link to={`/admin/places/${row._id}/edit`} onClick={(e) => e.stopPropagation()} className="rounded p-2 hover:bg-zinc-100">
+          <Link to={`/admin/places/${row._id}/edit`} onClick={(e) => e.stopPropagation()} className="rounded-lg p-2.5 hover:bg-zinc-100">
             <Pencil size={14} />
           </Link>
           <button
@@ -65,7 +65,7 @@ const Places = () => {
               e.stopPropagation();
               setPendingDelete(row);
             }}
-            className="rounded p-2 hover:bg-red-50 hover:text-red-600"
+            className="rounded-lg p-2.5 hover:bg-red-50 hover:text-red-600"
           >
             <Trash2 size={14} />
           </button>

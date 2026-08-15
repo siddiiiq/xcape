@@ -83,7 +83,7 @@ const Members = () => {
       key: "actions",
       label: "",
       render: (row) => (
-        <button onClick={() => setPendingDelete(row)} className="rounded p-2 hover:bg-red-50 hover:text-red-600">
+        <button onClick={() => setPendingDelete(row)} className="rounded-lg p-2.5 hover:bg-red-50 hover:text-red-600">
           <Trash2 size={14} />
         </button>
       ),
@@ -94,8 +94,8 @@ const Members = () => {
     <div>
       <PageHeader title="Members" description="People who applied to join the crew." />
 
-      <div className="mb-5 flex flex-wrap gap-3">
-        <div className="relative flex-1 min-w-[220px]">
+      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <div className="relative w-full sm:min-w-[220px] sm:flex-1">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
           <input
             className="input pl-8"
@@ -108,7 +108,7 @@ const Members = () => {
           />
         </div>
         <select
-          className="input w-auto"
+          className="input w-full sm:w-auto"
           value={status}
           onChange={(e) => {
             setPage(1);

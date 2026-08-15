@@ -92,8 +92,8 @@ const Bookings = () => {
     <div>
       <PageHeader title="Bookings" description="Every trip booking, with payment and status." />
 
-      <div className="mb-5 flex flex-wrap gap-3">
-        <div className="relative min-w-[220px] flex-1">
+      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <div className="relative w-full sm:min-w-[220px] sm:flex-1">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
           <input
             className="input pl-8"
@@ -105,13 +105,13 @@ const Bookings = () => {
             }}
           />
         </div>
-        <select className="input w-auto" value={paymentStatus} onChange={(e) => { setPage(1); setPaymentStatus(e.target.value); }}>
+        <select className="input w-full sm:w-auto" value={paymentStatus} onChange={(e) => { setPage(1); setPaymentStatus(e.target.value); }}>
           <option value="">All payment statuses</option>
           {PAYMENT_STATUSES.map((s) => (
             <option key={s} value={s}>{s}</option>
           ))}
         </select>
-        <select className="input w-auto" value={bookingStatus} onChange={(e) => { setPage(1); setBookingStatus(e.target.value); }}>
+        <select className="input w-full sm:w-auto" value={bookingStatus} onChange={(e) => { setPage(1); setBookingStatus(e.target.value); }}>
           <option value="">All booking statuses</option>
           {BOOKING_STATUSES.map((s) => (
             <option key={s} value={s}>{s}</option>
@@ -142,59 +142,59 @@ const Bookings = () => {
       <Modal open={Boolean(viewing)} title={viewing?.bookingReference} onClose={() => setViewing(null)}>
         {viewing && (
           <div className="space-y-3 text-sm">
-            <div className="flex justify-between border-b border-line pb-2">
+            <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-b border-line pb-2">
               <span className="text-muted">Customer</span>
-              <span className="font-medium">{viewing.customerSnapshot?.name} ({viewing.customerSnapshot?.email})</span>
+              <span className="text-right font-medium">{viewing.customerSnapshot?.name} ({viewing.customerSnapshot?.email})</span>
             </div>
-            <div className="flex justify-between border-b border-line pb-2">
+            <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-b border-line pb-2">
               <span className="text-muted">Phone</span>
               <span>{viewing.customerSnapshot?.phone || "-"}</span>
             </div>
-            <div className="flex justify-between border-b border-line pb-2">
+            <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-b border-line pb-2">
               <span className="text-muted">Trip</span>
-              <span>{viewing.trip?.title || "Trip deleted"} — {viewing.trip?.destination}</span>
+              <span className="text-right">{viewing.trip?.title || "Trip deleted"} — {viewing.trip?.destination}</span>
             </div>
-            <div className="flex justify-between border-b border-line pb-2">
+            <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-b border-line pb-2">
               <span className="text-muted">Seats</span>
               <span>{viewing.seats}</span>
             </div>
-            <div className="flex justify-between border-b border-line pb-2">
+            <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-b border-line pb-2">
               <span className="text-muted">Total Amount</span>
               <span className="font-semibold">₹{viewing.totalAmount}</span>
             </div>
-            <div className="flex justify-between border-b border-line pb-2">
+            <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-b border-line pb-2">
               <span className="text-muted">Payment Method</span>
               <span>{viewing.paymentMethod}</span>
             </div>
-            <div className="flex justify-between border-b border-line pb-2">
+            <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-line pb-2">
               <span className="text-muted">Payment Status</span>
               <Badge label={viewing.paymentStatus} tone={paymentTone[viewing.paymentStatus]} />
             </div>
-            <div className="flex justify-between border-b border-line pb-2">
+            <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-line pb-2">
               <span className="text-muted">Booking Status</span>
               <Badge label={viewing.bookingStatus} tone={bookingTone[viewing.bookingStatus]} />
             </div>
             {viewing.paymentOrderId && (
-              <div className="flex justify-between border-b border-line pb-2">
+              <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-b border-line pb-2">
                 <span className="text-muted">Order Reference</span>
-                <span className="text-xs">{viewing.paymentOrderId}</span>
+                <span className="break-all text-right text-xs">{viewing.paymentOrderId}</span>
               </div>
             )}
             {viewing.paymentTransactionId && (
-              <div className="flex justify-between border-b border-line pb-2">
+              <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-b border-line pb-2">
                 <span className="text-muted">Transaction ID</span>
-                <span className="text-xs">{viewing.paymentTransactionId}</span>
+                <span className="break-all text-right text-xs">{viewing.paymentTransactionId}</span>
               </div>
             )}
 
-            <div className="flex flex-wrap justify-end gap-3 pt-3">
+            <div className="flex flex-col gap-3 pt-3 sm:flex-row sm:flex-wrap sm:justify-end">
               {viewing.paymentMethod === "COD" && viewing.paymentStatus === "PENDING" && (
-                <button onClick={() => markCodPaid(viewing)} className="btn-primary flex items-center gap-2">
+                <button onClick={() => markCodPaid(viewing)} className="btn-primary flex w-full items-center justify-center gap-2 sm:w-auto">
                   <CheckCircle2 size={14} /> Mark COD as Paid
                 </button>
               )}
               {viewing.bookingStatus !== "CANCELLED" && (
-                <button onClick={() => cancelBooking(viewing)} className="btn-danger flex items-center gap-2">
+                <button onClick={() => cancelBooking(viewing)} className="btn-danger flex w-full items-center justify-center gap-2 sm:w-auto">
                   <XCircle size={14} /> Cancel Booking
                 </button>
               )}

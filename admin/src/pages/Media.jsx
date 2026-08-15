@@ -47,12 +47,12 @@ const Media = () => {
     <div>
       <PageHeader title="Media Library" description="Every image and video uploaded through the admin, backed by Cloudinary." />
 
-      <div className="mb-5 flex flex-wrap gap-3">
-        <div className="relative flex-1 min-w-[220px]">
+      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <div className="relative w-full sm:min-w-[220px] sm:flex-1">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
           <input className="input pl-8" placeholder="Search by filename..." value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
-        <select className="input w-auto" value={folder} onChange={(e) => setFolder(e.target.value)}>
+        <select className="input w-full sm:w-auto" value={folder} onChange={(e) => setFolder(e.target.value)}>
           {FOLDERS.map((f) => (
             <option key={f.value} value={f.value}>
               {f.label}
@@ -68,7 +68,7 @@ const Media = () => {
       )}
       {!loading && !error && data?.configured && data.resources.length === 0 && <EmptyState title="No media uploaded yet." />}
       {!loading && !error && data?.resources?.length > 0 && (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6">
+        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
           {data.resources.map((asset) => (
             <div key={asset.publicId} className="group relative aspect-square overflow-hidden rounded-lg border border-line">
               {asset.resourceType === "video" ? (
@@ -76,12 +76,24 @@ const Media = () => {
               ) : (
                 <img src={asset.url} alt="" className="h-full w-full object-cover" />
               )}
-              <div className="absolute inset-0 hidden flex-col items-center justify-center gap-2 bg-black/60 group-hover:flex">
+              {/* Full-cover hover reveal for mouse users (desktop only —
+                  :hover doesn't fire reliably on touch). */}
+              <div className="absolute inset-0 hidden flex-col items-center justify-center gap-2 bg-black/60 sm:group-hover:flex">
                 <button onClick={() => copyUrl(asset.url)} className="rounded-full bg-white/90 p-2" title="Copy URL">
                   <Copy size={14} />
                 </button>
                 <button onClick={() => setPendingDelete(asset)} className="rounded-full bg-white/90 p-2 text-red-600" title="Delete">
                   <Trash2 size={14} />
+                </button>
+              </div>
+              {/* Always-visible corner buttons so the same actions are
+                  reachable by tap on mobile. */}
+              <div className="absolute right-1 top-1 flex gap-1 sm:hidden">
+                <button onClick={() => copyUrl(asset.url)} className="rounded-full bg-black/60 p-1.5 text-white" aria-label="Copy URL">
+                  <Copy size={12} />
+                </button>
+                <button onClick={() => setPendingDelete(asset)} className="rounded-full bg-black/60 p-1.5 text-white" aria-label="Delete">
+                  <Trash2 size={12} />
                 </button>
               </div>
             </div>

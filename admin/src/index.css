@@ -8,6 +8,26 @@
   }
 }
 
+/* Mobile-only fixes. Left unlayered on purpose so they win over the
+   @layer utilities classes below regardless of source order (CSS cascade
+   layers give unlayered rules priority over any @layer'd rule). */
+@media (max-width: 640px) {
+  /* iOS Safari auto-zooms the page when a focused input's font-size is
+     under 16px. Our .input class uses text-sm (14px), so bump it back up
+     to 16px only on small screens to stop the zoom without changing the
+     desktop look. */
+  .input {
+    font-size: 16px;
+  }
+
+  /* Prevent iOS/Android's grey tap-highlight flash on buttons and links,
+     which looks broken against our custom hover/active states. */
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
 @layer utilities {
   .card {
     @apply rounded-xl border border-line bg-panel;

@@ -16,7 +16,7 @@ export const ToastProvider = ({ children }) => {
       {children}
       {toast && (
         <div
-          className={`fixed bottom-6 right-6 z-[100] flex items-center gap-2 rounded-lg px-4 py-3 text-sm text-white shadow-lg ${
+          className={`fixed inset-x-4 bottom-4 z-[100] flex items-center gap-2 rounded-lg px-4 py-3 text-sm text-white shadow-lg sm:inset-x-auto sm:bottom-6 sm:right-6 sm:max-w-sm ${
             toast.type === "error" ? "bg-red-600" : "bg-ink"
           }`}
         >

@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Layout from "./components/layout/Layout.jsx";
 import { SettingsProvider } from "./context/SettingsContext.jsx";
@@ -28,11 +28,40 @@ import AccountBookingDetail from "./pages/AccountBookingDetail.jsx";
 import Trips from "./pages/Trips.jsx";
 import TripDetails from "./pages/TripDetails.jsx";
 
+/**
+ * Automatically scroll to the top whenever the route changes.
+ *
+ * This handles:
+ * - Clicking navigation links
+ * - Going to another page
+ * - Browser back/forward navigation
+ * - Refreshing a page
+ * - Dynamic routes such as /places/:slug
+ * - Dynamic routes such as /trips/:slug
+ */
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+  }, [pathname]);
+
+  return null;
+};
+
 const App = () => (
   <SettingsProvider>
     <CustomerAuthProvider>
       <Layout>
+        {/* Keeps every route change at the top of the page */}
+        <ScrollToTop />
+
         <Routes>
+          {/* Public pages */}
           <Route path="/" element={<Home />} />
           <Route path="/places" element={<Places />} />
           <Route path="/places/:slug" element={<PlaceDetails />} />
@@ -54,11 +83,43 @@ const App = () => (
           <Route path="/reset-password/:token" element={<ResetPassword />} />
 
           {/* Customer account (protected) */}
-          <Route path="/account" element={<ProtectedCustomerRoute><Account /></ProtectedCustomerRoute>} />
-          <Route path="/account/profile" element={<ProtectedCustomerRoute><AccountProfile /></ProtectedCustomerRoute>} />
-          <Route path="/account/bookings" element={<ProtectedCustomerRoute><AccountBookings /></ProtectedCustomerRoute>} />
-          <Route path="/account/bookings/:id" element={<ProtectedCustomerRoute><AccountBookingDetail /></ProtectedCustomerRoute>} />
+          <Route
+            path="/account"
+            element={
+              <ProtectedCustomerRoute>
+                <Account />
+              </ProtectedCustomerRoute>
+            }
+          />
 
+          <Route
+            path="/account/profile"
+            element={
+              <ProtectedCustomerRoute>
+                <AccountProfile />
+              </ProtectedCustomerRoute>
+            }
+          />
+
+          <Route
+            path="/account/bookings"
+            element={
+              <ProtectedCustomerRoute>
+                <AccountBookings />
+              </ProtectedCustomerRoute>
+            }
+          />
+
+          <Route
+            path="/account/bookings/:id"
+            element={
+              <ProtectedCustomerRoute>
+                <AccountBookingDetail />
+              </ProtectedCustomerRoute>
+            }
+          />
+
+          {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>

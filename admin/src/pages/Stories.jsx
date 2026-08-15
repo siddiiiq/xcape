@@ -81,10 +81,10 @@ const Stories = () => {
       label: "",
       render: (row) => (
         <div className="flex justify-end gap-2">
-          <button onClick={() => openEdit(row)} className="rounded p-2 hover:bg-zinc-100">
+          <button onClick={() => openEdit(row)} className="rounded-lg p-2.5 hover:bg-zinc-100">
             <Pencil size={14} />
           </button>
-          <button onClick={() => setPendingDelete(row)} className="rounded p-2 hover:bg-red-50 hover:text-red-600">
+          <button onClick={() => setPendingDelete(row)} className="rounded-lg p-2.5 hover:bg-red-50 hover:text-red-600">
             <Trash2 size={14} />
           </button>
         </div>
@@ -129,7 +129,7 @@ const Stories = () => {
               <label className="label">Content</label>
               <textarea rows={8} className="input" value={editing.content} onChange={(e) => setEditing((s) => ({ ...s, content: e.target.value }))} />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label className="label">Associated Place</label>
                 <select className="input" value={editing.place} onChange={(e) => setEditing((s) => ({ ...s, place: e.target.value }))}>
@@ -146,7 +146,7 @@ const Stories = () => {
                 <input type="number" className="input" value={editing.order} onChange={(e) => setEditing((s) => ({ ...s, order: Number(e.target.value) }))} />
               </div>
             </div>
-            <div className="flex gap-6">
+            <div className="flex flex-wrap gap-4 sm:gap-6">
               <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" checked={editing.published} onChange={(e) => setEditing((s) => ({ ...s, published: e.target.checked }))} />
                 Published
@@ -156,11 +156,11 @@ const Stories = () => {
                 Featured
               </label>
             </div>
-            <div className="flex justify-end gap-3 pt-2">
-              <button onClick={() => setEditing(null)} className="btn-secondary">
+            <div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end sm:gap-3">
+              <button onClick={() => setEditing(null)} className="btn-secondary w-full sm:w-auto">
                 Cancel
               </button>
-              <button onClick={handleSave} disabled={saving} className="btn-primary">
+              <button onClick={handleSave} disabled={saving} className="btn-primary w-full sm:w-auto">
                 {saving ? "Saving..." : "Save Story"}
               </button>
             </div>

@@ -17,6 +17,12 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
       <nav
@@ -109,18 +115,34 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {open && (
-        <div className="glass absolute left-4 right-4 top-20 z-40 flex flex-col gap-1 rounded-3xl p-4 md:hidden">
-          
-          {NAV_LINKS.map((link) => (
+        <>
+          {/* overlay: clicking closes menu */}
+          <div
+            className="fixed inset-0 z-30 bg-black/40 md:hidden"
+            onClick={() => setOpen(false)}
+            aria-hidden
+          />
+
+          <div className="glass absolute left-4 right-4 top-20 z-40 flex flex-col gap-1 rounded-3xl p-4 md:hidden">
+            {/* Home link at top of mobile menu */}
             <NavLink
-              key={link.to}
-              to={link.to}
+              to="/"
               onClick={() => setOpen(false)}
               className="rounded-xl px-4 py-3 text-sm uppercase tracking-widest2 text-fog/80 hover:bg-white/5"
             >
-              {link.label}
+              Home
             </NavLink>
-          ))}
+
+            {NAV_LINKS.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                onClick={() => setOpen(false)}
+                className="rounded-xl px-4 py-3 text-sm uppercase tracking-widest2 text-fog/80 hover:bg-white/5"
+              >
+                {link.label}
+              </NavLink>
+            ))}
 
           {isAuthenticated ? (
             <>
@@ -171,6 +193,7 @@ const Navbar = () => {
             </>
           )}
         </div>
+        </>
       )}
     </header>
   );

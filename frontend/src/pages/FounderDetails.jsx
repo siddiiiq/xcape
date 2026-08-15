@@ -27,7 +27,11 @@ const FounderDetails = () => {
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-[280px_1fr]">
         <div className="aspect-[3/4] overflow-hidden rounded-2xl">
           <img
-            src={founder.profileImage?.url || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600"}
+            src={
+              founder.profileImage?.url ||
+              founder.image?.url ||
+              "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600"
+            }
             alt={founder.name}
             className="h-full w-full object-cover"
           />

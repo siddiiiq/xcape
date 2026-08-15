@@ -69,7 +69,7 @@ const Customers = () => {
               e.stopPropagation();
               setPendingDelete(row);
             }}
-            className="rounded p-2 hover:bg-red-50 hover:text-red-600"
+            className="rounded-lg p-2.5 hover:bg-red-50 hover:text-red-600"
             aria-label="Delete customer"
           >
             <Trash2 size={14} />
@@ -120,7 +120,7 @@ const Customers = () => {
         {detailLoading && <Loader label="Loading..." />}
         {detail?.customer && (
           <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-3 text-sm">
+            <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
               <div>
                 <p className="text-xs text-muted">Email</p>
                 <p className="font-medium">{detail.customer.email}</p>

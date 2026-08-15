@@ -31,17 +31,21 @@ const GalleryManager = ({
 
       <div className="mt-4 space-y-3">
         {sorted.map((image, index) => (
-          <div key={image._id} className="flex gap-4 rounded-lg border border-line p-3">
-            <img src={image.url} alt={image.title || ""} className="h-20 w-20 shrink-0 rounded-md object-cover" />
+          <div key={image._id} className="flex flex-col gap-3 rounded-lg border border-line p-3 sm:flex-row sm:gap-4">
+            <img
+              src={image.url}
+              alt={image.title || ""}
+              className="h-20 w-20 shrink-0 rounded-md object-cover"
+            />
 
-            <div className="flex-1 space-y-2">
+            <div className="min-w-0 flex-1 space-y-2">
               <input
                 className="input"
                 placeholder="Title"
                 value={image.title || ""}
                 onChange={(e) => onUpdateImage(image._id, { title: e.target.value })}
               />
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row">
                 <input
                   className="input"
                   placeholder="Description"
@@ -60,13 +64,13 @@ const GalleryManager = ({
               </div>
             </div>
 
-            <div className="flex shrink-0 flex-col items-center justify-between gap-1">
-              <div className="flex flex-col gap-0.5">
+            <div className="flex shrink-0 flex-row items-center gap-1 sm:flex-col sm:items-center sm:justify-between">
+              <div className="flex flex-row gap-0.5 sm:flex-col">
                 <button
                   type="button"
                   onClick={() => move(index, -1)}
                   disabled={index === 0}
-                  className="rounded p-1 text-muted hover:bg-zinc-100 disabled:opacity-30"
+                  className="rounded p-1.5 text-muted hover:bg-zinc-100 disabled:opacity-30"
                   aria-label="Move up"
                 >
                   <ChevronUp size={16} />
@@ -75,7 +79,7 @@ const GalleryManager = ({
                   type="button"
                   onClick={() => move(index, 1)}
                   disabled={index === sorted.length - 1}
-                  className="rounded p-1 text-muted hover:bg-zinc-100 disabled:opacity-30"
+                  className="rounded p-1.5 text-muted hover:bg-zinc-100 disabled:opacity-30"
                   aria-label="Move down"
                 >
                   <ChevronDown size={16} />

@@ -58,6 +58,7 @@ const FounderCard = ({ founder, index = 0 }) => {
       <img
         src={
           founder.profileImage?.url ||
+          founder.image?.url ||
           "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600"
         }
         alt={founder.name}

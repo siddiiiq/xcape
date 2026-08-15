@@ -91,10 +91,10 @@ const Reels = () => {
       label: "",
       render: (row) => (
         <div className="flex justify-end gap-2">
-          <button onClick={() => setEditing({ ...row })} className="rounded p-2 hover:bg-zinc-100">
+          <button onClick={() => setEditing({ ...row })} className="rounded-lg p-2.5 hover:bg-zinc-100">
             <Pencil size={14} />
           </button>
-          <button onClick={() => setPendingDelete(row)} className="rounded p-2 hover:bg-red-50 hover:text-red-600">
+          <button onClick={() => setPendingDelete(row)} className="rounded-lg p-2.5 hover:bg-red-50 hover:text-red-600">
             <Trash2 size={14} />
           </button>
         </div>
@@ -140,21 +140,21 @@ const Reels = () => {
               <label className="label">Description</label>
               <textarea rows={2} className="input" value={editing.description} onChange={(e) => setEditing((r) => ({ ...r, description: e.target.value }))} />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" checked={editing.published} onChange={(e) => setEditing((r) => ({ ...r, published: e.target.checked }))} />
                 Published
               </label>
-              <div className="w-24">
+              <div className="w-full sm:w-24">
                 <label className="label">Order</label>
                 <input type="number" className="input" value={editing.order} onChange={(e) => setEditing((r) => ({ ...r, order: Number(e.target.value) }))} />
               </div>
             </div>
-            <div className="flex justify-end gap-3 pt-2">
-              <button onClick={() => setEditing(null)} className="btn-secondary">
+            <div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end sm:gap-3">
+              <button onClick={() => setEditing(null)} className="btn-secondary w-full sm:w-auto">
                 Cancel
               </button>
-              <button onClick={handleSave} disabled={saving} className="btn-primary">
+              <button onClick={handleSave} disabled={saving} className="btn-primary w-full sm:w-auto">
                 {saving ? "Saving..." : "Save Reel"}
               </button>
             </div>
