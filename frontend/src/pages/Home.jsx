@@ -84,7 +84,7 @@ const ScrollReveal = ({ children, className = "", delay = 0 }) => {
 /* HIGH-PERFORMANCE PARALLAX MEDIA                                    */
 /* ================================================================== */
 
-const ParallaxMedia = ({ src, isVideo = false, speed = 0.15 }) => {
+const ParallaxMedia = ({ src, isVideo = false, speed = 0.15, onReady }) => {
   const imageRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -131,6 +131,8 @@ const ParallaxMedia = ({ src, isVideo = false, speed = 0.15 }) => {
             loop
             playsInline
             preload="metadata"
+            onCanPlayThrough={() => onReady?.()}
+            onLoadedData={() => onReady?.()}
             className="h-full w-full object-cover opacity-90"
           />
         ) : (
@@ -267,9 +269,27 @@ const GLASS_PILL = `
 /* ================================================================== */
 
 const Hero = () => {
+  const [videoReady, setVideoReady] = useState(false);
+
+  useEffect(() => {
+    // Fallback: if video doesn't fire ready within 7s, proceed anyway
+    const t = setTimeout(() => setVideoReady(true), 7000);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <section className="relative flex min-h-[70vh] md:min-h-screen items-start md:items-center justify-center overflow-visible pt-28 sm:pt-24 md:pt-20 lg:pt-24 pb-10 sm:pb-16">
-      <ParallaxMedia src="/video/IMG_1779.mp4" isVideo={true} speed={0.25} />
+      <ParallaxMedia src="/video/IMG_1779.mp4" isVideo={true} speed={0.25} onReady={() => setVideoReady(true)} />
+
+      {/* Loading overlay to prevent blank hero until video is ready */}
+      {!videoReady && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-ink">
+          <div className="flex flex-col items-center gap-4">
+            <div className="h-14 w-14 rounded-full border-4 border-t-amber-400 border-amber-200 animate-spin" />
+            <div className="text-sm text-white/90">Loading…</div>
+          </div>
+        </div>
+      )}
 
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-ink z-[1]" />
 
