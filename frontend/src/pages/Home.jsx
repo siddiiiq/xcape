@@ -130,6 +130,7 @@ const ParallaxMedia = ({ src, isVideo = false, speed = 0.15 }) => {
             muted
             loop
             playsInline
+            preload="metadata"
             className="h-full w-full object-cover opacity-90"
           />
         ) : (
@@ -268,7 +269,7 @@ const GLASS_PILL = `
 const Hero = () => {
   return (
     <section className="relative flex min-h-[70vh] md:min-h-screen items-start md:items-center justify-center overflow-visible pt-28 sm:pt-24 md:pt-20 lg:pt-24 pb-10 sm:pb-16">
-      <ParallaxMedia src="/video/IMG_1773.MP4" isVideo={true} speed={0.25} />
+      <ParallaxMedia src="/video/IMG_1779.mp4" isVideo={true} speed={0.25} />
 
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-ink z-[1]" />
 
